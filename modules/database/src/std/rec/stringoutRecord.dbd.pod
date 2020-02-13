@@ -210,6 +210,13 @@ for more information on these fields.
         interest(4)
         extra("epicsCallback            *simpvt")
     }
+	field(EWRT,DBF_UCHAR) {
+		prompt("Enable Write Equal Val")
+		promptgroup("50 - Output")
+		asl(ASL0)
+		initial("1")
+	}
+
 
 =head3 Alarm Parameters
 

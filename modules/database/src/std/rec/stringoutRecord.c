@@ -238,7 +238,11 @@ static long writeValue(stringoutRecord *prec)
 
     switch (prec->simm) {
     case menuYesNoNO:
-        status = pdset->write_stringout(prec);
+        /* only write to devsup if consecutive write (EWRT) is enabled or new value is different than last value */
+        if (prec->ewrt || (strncmp(prec->oval, prec->val, sizeof(prec->val)))) {
+            status = pdset->write_stringout(prec);
+            /* The update of prec->oval will be done in the monitor() function */
+        }
         break;
 
     case menuYesNoYES: {

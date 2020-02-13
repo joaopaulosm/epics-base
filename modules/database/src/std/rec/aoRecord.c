@@ -565,7 +565,11 @@ static long writeValue(aoRecord *prec)
 
     switch (prec->simm) {
     case menuYesNoNO:
-        status = pdset->write_ao(prec);
+        /* only write to devsup if consecutive write (EWRT) is enabled or new value is different than last value */
+        if (prec->ewrt || (prec->val != prec->lval)) {
+            status = pdset->write_ao(prec);
+            prec->lval = prec->val;
+        }       
         break;
 
     case menuYesNoYES: {

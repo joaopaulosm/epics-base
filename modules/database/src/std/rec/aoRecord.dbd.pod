@@ -588,6 +588,19 @@ information on these fields.
         prompt("Was OVAL modified?")
         special(SPC_NOMOD)
     }
+	field(LVAL,DBF_DOUBLE) {
+		prompt("Last Value Written")
+		promptgroup("50 - Output")
+		asl(ASL1)
+		special(SPC_NOMOD)
+	}
+	field(EWRT,DBF_UCHAR) {
+		prompt("Enable Write Equal Val")
+		promptgroup("50 - Output")
+		asl(ASL0)
+		initial("1")
+	}
+
 }
 
 =head2 Record Support

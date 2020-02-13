@@ -127,6 +127,8 @@ static long init_record(struct dbCommon *pcommon, int pass)
     prec->mlst = prec->val;
     prec->alst = prec->val;
     prec->lalm = prec->val;
+    prec->oval = prec->val+1; /* force OVAl to be different thah VAL at record init */
+   
     return 0;
 }
 
@@ -392,7 +394,11 @@ static long writeValue(longoutRecord *prec)
 
     switch (prec->simm) {
     case menuYesNoNO:
-        status = pdset->write_longout(prec);
+        /* only write to devsup if consecutive write (EWRT) is enabled or new value is different than last value */
+        if (prec->ewrt || (prec->val != prec->oval)) {
+            status = pdset->write_longout(prec);
+            prec->oval = prec->val;
+        }       
         break;
 
     case menuYesNoYES: {
